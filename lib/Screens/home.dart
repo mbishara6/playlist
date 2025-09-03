@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_list/Screens/song_page.dart';
 import 'package:play_list/components/my_drawer.dart';
 import 'package:provider/provider.dart';
 import '../Models/playlist_provider.dart';
@@ -26,7 +27,14 @@ class _MyHomeState extends State<MyHome> {
 
   }
 
-  void goToSong (){
+  void goToSong (int songIndex){
+    playlistProvider.currentSongIndex = songIndex;
+    Navigator.push(
+        context, 
+    MaterialPageRoute(builder: (context) => SongPage(),
+    ),
+    );
+
 
   }
 
@@ -47,6 +55,7 @@ class _MyHomeState extends State<MyHome> {
 
             //return List view UI
             return ListView.builder(
+              itemCount: playlist.length,
                 itemBuilder:(context,index){
                   // get Individual song
                   final Song song = playlist[index];
@@ -54,9 +63,9 @@ class _MyHomeState extends State<MyHome> {
                     title: Text(song.songName),
                     subtitle: Text(song.artistName),
                     leading: Image.asset(song.albumArtImagePath),
-                    onTap: goToSong[index],
+                    onTap: () => goToSong(index),
 
-                  ),
+                  );
                 }
             );
           }
