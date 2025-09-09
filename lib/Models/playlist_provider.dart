@@ -6,12 +6,26 @@ class PlayListProvider extends ChangeNotifier {
   // playlist of songs
   final List<Song> _playlist = [
     Song(
-      songName: "nice",
-      artistName: 'dicom',
-      albumArtImagePath: "assets/images",
+      songName: "Down Below",
+      artistName: 'DaBaby',
+      albumArtImagePath: "assets/images/dababby.jpeg",
+      audioPath: "audio/",
+    ),
+    Song(
+      songName: "You aren't alone",
+      artistName: 'Micheal.J',
+      albumArtImagePath: "assets/images/micheal.jpeg",
       audioPath: "audio/chill",
-    )
+    ),
+    Song(
+      songName: "ABC",
+      artistName: 'Micheal Jackson',
+      albumArtImagePath: "assets/images/micheal.jpeg",
+      audioPath: "audio/chill",
+    ),
+
   ];
+
 
   // current song index
   int? _currentSongIndex;

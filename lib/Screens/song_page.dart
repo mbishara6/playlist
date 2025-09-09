@@ -5,14 +5,16 @@ import 'package:provider/provider.dart';
 
 class SongPage extends StatelessWidget {
   const SongPage({super.key});
-  //convert duration into min:sec
-  String formatTime(Duration duration){
-    String twoDigitSeconds =  duration.inSeconds.remainder(60).toString().padLeft(2,'0');
-    String formattedTime = "${duration.inMinutes}:$duration.twoDigitSecond";
 
-    return formattedTime;
-
+  String formatTime(Duration duration) {
+    String twoDigitMinutes =
+    duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    String twoDigitSeconds =
+    duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return "$twoDigitMinutes:$twoDigitSeconds";
   }
+
+
 
 
   @override
@@ -161,6 +163,7 @@ class SongPage extends StatelessWidget {
                               child: NeuBox(
                                 child: Icon(Icons.play_arrow),),
                             ),),
+                          SizedBox(width: 24,),
 
                           //skip forward
                           Expanded(
