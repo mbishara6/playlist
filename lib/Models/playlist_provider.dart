@@ -9,19 +9,19 @@ class PlayListProvider extends ChangeNotifier {
       songName: "Down Below",
       artistName: 'DaBaby',
       albumArtImagePath: "assets/images/dababby.jpeg",
-      audioPath: "audio/",
+      audioPath: "audios/tenkai.mp3",
     ),
     Song(
       songName: "You aren't alone",
       artistName: 'Micheal.J',
       albumArtImagePath: "assets/images/micheal.jpeg",
-      audioPath: "audio/chill",
+      audioPath: "audios/Hussain_Al_Jassmi_-__Ommi_Jannah(360p).mp3",
     ),
     Song(
       songName: "ABC",
       artistName: 'Micheal Jackson',
       albumArtImagePath: "assets/images/micheal.jpeg",
-      audioPath: "audio/chill",
+      audioPath: "audios/tenkai.mp3",
     ),
 
   ];
