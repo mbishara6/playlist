@@ -136,17 +136,24 @@ class SongPage extends StatelessWidget {
                             ),
                             child: Slider(
                                 min: 0,
-                                max: value.totalDuration.inSeconds.toDouble(),
-                                value: value.currentDuration.inSeconds.toDouble(),
+                                max: value.totalDuration.inSeconds.toDouble() > 0 
+                                    ? value.totalDuration.inSeconds.toDouble() 
+                                    : 1.0,
+                                value: value.currentDuration.inSeconds.toDouble().clamp(
+                                    0.0, 
+                                    value.totalDuration.inSeconds.toDouble() > 0 
+                                        ? value.totalDuration.inSeconds.toDouble() 
+                                        : 1.0
+                                ),
                                 activeColor: Colors.green,
-                                onChanged:(double double){},
-                                  // sliding has finished 
-                                 onChangeEnd: (double double ){
-                                  value.seek(Duration(seconds: double.toInt()));
-
-
+                                onChanged: (double newValue) {
+                                  // Allow user to drag the slider
+                                },
+                                onChangeEnd: (double newValue) {
+                                  if (value.totalDuration.inSeconds > 0) {
+                                    value.seek(Duration(seconds: newValue.toInt()));
+                                  }
                                 }
-
                             ),
                           ),
                         ],

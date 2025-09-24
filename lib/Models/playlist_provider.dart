@@ -183,12 +183,16 @@ class PlayListProvider extends ChangeNotifier {
   // listen to duration updates
   void listenToDuration() {
     _audioPlayer.onDurationChanged.listen((newDuration) {
-      _totalDuration = newDuration;
+      _totalDuration = newDuration ?? Duration.zero;
       notifyListeners();
     });
 
     _audioPlayer.onPositionChanged.listen((newPosition) {
-      _currentDuration = newPosition;
+      _currentDuration = newPosition ?? Duration.zero;
+      // Ensure current duration doesn't exceed total duration
+      if (_totalDuration.inSeconds > 0 && _currentDuration > _totalDuration) {
+        _currentDuration = _totalDuration;
+      }
       notifyListeners();
     });
 
