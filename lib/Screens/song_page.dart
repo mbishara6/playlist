@@ -24,7 +24,13 @@ class SongPage extends StatelessWidget {
 // get the playlist
 
         final playlist = value.playlist;
-        final currentSong = playlist[value.currentSongIndex ?? 0];
+        // Safety check for current song index
+        final songIndex = value.currentSongIndex ?? 0;
+        if (songIndex >= playlist.length) {
+          // If index is out of bounds, reset to first song
+          value.playSong(0);
+        }
+        final currentSong = playlist[songIndex.clamp(0, playlist.length - 1)];
 
 
           // Return UI
@@ -36,28 +42,22 @@ class SongPage extends StatelessWidget {
                 ),
               ),
               body: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 25,right: 25,bottom: 25),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // appbar
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //back button
-                          IconButton(
-                            onPressed: ()=>Navigator.pop(context),
-                            icon:const Icon(Icons.arrow_back),
-                          ),
-                          //title
-                          const Text("P L A Y L I S T"),
-
-                          //MENU BUTTON
-                          IconButton(onPressed: (){},
-                              icon:const  Icon(Icons.menu))
-                        ],
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      // Song info header
+                      Text(
+                        "Now Playing",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
+                      const SizedBox(height: 10),
 
                       //album artwork
                       NeuBox(
@@ -94,7 +94,7 @@ class SongPage extends StatelessWidget {
                             ],
                           )
                       ),
-                      const SizedBox(height: 25,),
+                      const SizedBox(height: 20,),
                       // song duration progress
                       Column(
                         children: [
@@ -107,11 +107,22 @@ class SongPage extends StatelessWidget {
                                 Text(formatTime(value.currentDuration)),
 
                                 // shuffle
-                                Icon(Icons.shuffle),
+                                GestureDetector(
+                                  onTap: value.toggleShuffle,
+                                  child: Icon(
+                                    Icons.shuffle,
+                                    color: value.isShuffleMode ? Colors.green : Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                ),
 
                                 //repeat
-
-                                Icon(Icons.repeat),
+                                GestureDetector(
+                                  onTap: value.toggleRepeat,
+                                  child: Icon(
+                                    Icons.repeat,
+                                    color: value.isRepeatMode ? Colors.green : Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                ),
 
                                 //end time
                                 Text(formatTime(value.totalDuration)),
@@ -141,7 +152,7 @@ class SongPage extends StatelessWidget {
                         ],
                       ),
 
-                      SizedBox(height: 10),
+                      const SizedBox(height: 15),
 
                       //playback controls
                       Row(
@@ -149,35 +160,51 @@ class SongPage extends StatelessWidget {
                           //skip previous
                           Expanded(
                             child: GestureDetector(
-                              onTap: value.playPreviousSong,
+                              onTap: () {
+value.playPreviousSong();
+                              },
                               child: NeuBox(
-                                child: Icon(Icons.skip_previous),),
-                            ),),
+                                child: Icon(Icons.skip_previous, size: 28),
+                              ),
+                            ),
+                          ),
                           SizedBox(width: 25,),
 
                           //play pause
                           Expanded(
                             flex: 2,
                             child: GestureDetector(
-                              onTap: value.pauseOrResume,
+                              onTap: () {
+value.pauseOrResume();
+                              },
                               child: NeuBox(
-                                child: Icon(Icons.play_arrow),),
-                            ),),
+                                child: Icon(
+                                  value.isPlaying ? Icons.pause : Icons.play_arrow,
+                                  size: 32,
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(width: 24,),
 
                           //skip forward
                           Expanded(
                             child: GestureDetector(
-                              onTap: value.playNextSong,
+                              onTap: () {
+value.playNextSong();
+                              },
                               child: NeuBox(
-                                child: Icon(value.isPlaying ?Icons.pause:Icons.skip_next),),
-                            ),)
+                                child: Icon(Icons.skip_next, size: 28),
+                              ),
+                            ),
+                          ),
 
                         ],
 
                       ),
 
                     ],
+                    ),
                   ),
                 ),
               ),

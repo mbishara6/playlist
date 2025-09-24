@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_list/Screens/settings.dart';
+import 'package:play_list/components/page_transitions.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -19,23 +20,78 @@ class MyDrawer extends StatelessWidget {
             ),
           ),),
           Padding(
-            padding: const EdgeInsets.only(left: 25,top: 25),
+            padding: const EdgeInsets.only(left: 25, top: 25),
             child: ListTile(
-              title: Text("H O M E"),
-              leading:Icon(Icons.home_filled),
-              onTap: ()=> Navigator.pop(context),
+              title: Text(
+                "H O M E",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: Icon(
+                Icons.home_filled,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              onTap: () => Navigator.pop(context),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 25,top: 5),
+            padding: const EdgeInsets.only(left: 25, top: 5),
             child: ListTile(
-              title: Text(" S E T T I N G S"),
-              leading:Icon(Icons.settings),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder:(context) => Settings()));
-
-                //Navigate to settings
-
+              title: Text(
+                "L I B R A R Y",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: Icon(
+                Icons.library_music,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              onTap: () => Navigator.pop(context),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 5),
+            child: ListTile(
+              title: Text(
+                "F A V O R I T E S",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
+              onTap: () => Navigator.pop(context),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Divider(
+            color: Theme.of(context).colorScheme.inversePrimary.withValues(alpha: 0.3),
+            indent: 25,
+            endIndent: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 5),
+            child: ListTile(
+              title: Text(
+                "S E T T I N G S",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              onTap: () {
+                Navigator.push(context, FadeRoute(page: const Settings()));
               },
             ),
           )
